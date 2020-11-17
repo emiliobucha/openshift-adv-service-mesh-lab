@@ -44,6 +44,18 @@ spec:
   sourceNamespace: openshift-marketplace
   name: jaeger-product' > ./01-installation/02-jaeger-operator.yaml
 
+echo 'apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: kiali-ossm
+  namespace: openshift-operators-redhat
+spec:
+  channel: "stable"
+  installPlanApproval: Automatic
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  name: kiali-ossm' > ./01-installation/03-kiali-operator.yaml
+
 
 echo 'apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
