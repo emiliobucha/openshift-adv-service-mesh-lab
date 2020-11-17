@@ -34,6 +34,10 @@ https://console-openshift-console.apps.cluster-154a.154a.sandbox500.opentlc.com
 Admin User: admin
 Admin Password: r3dh4t1!
 ```
+```
+Mesh Admin User: user1
+Mesh Admin Password: r3dh4t1!
+```
 
 ## 3. Bussiness Application and 4. OpenShift Service Mesh Operator
 
@@ -79,6 +83,10 @@ This script creates the service mesh member roll and inject envoy proxy in all d
     * This script creates certificate for istio-ingress
     * Create the gateway for productpage
     * Create all policies, destination rules and virtual services.
+
+06. Execute 06-grant-permissions.sh
+
+This script grant permissions to user1 in projects bookinfo and bookretail-istio-system
 
 ## 7. Testing
 ### Check functionality
