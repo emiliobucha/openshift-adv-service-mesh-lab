@@ -1,4 +1,4 @@
-echo -en '\n-------- 5.1 Login --------\n'
+echo -en '\n-------- 6 Grant permissions --------\n'
 oc login $LAB_MASTER_API -u $OCP_USER -p $OCP_PASS
 
 # grant permission user1 like mesh-admin
