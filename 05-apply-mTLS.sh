@@ -1,5 +1,123 @@
 echo -en '\n-------- 5. Securing  --------\n'
 
+mkdir -p ./05-mTLS
+echo "apiVersion: authentication.istio.io/v1alpha1
+kind: Policy
+metadata:
+  name: {{DEPLOY_NAME}}-mtls
+spec:
+  peers:
+  - mtls:
+      mode: STRICT
+  targets:
+  - name: {{DEPLOY_NAME}}" > ./05-mTLS/07-policy-template.yaml
+
+echo "apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: {{DEPLOY_NAME}}-destinationrule-mtls
+spec:
+  host: {{DEPLOY_NAME}}
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+  subsets:
+  - name: v1
+    labels:
+      version: v1" > ./05-mTLS/08a-destinationrule-template.yaml
+
+echo "apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: reviews-destinationrule-mtls
+spec:
+  host: reviews
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+    loadBalancer:
+      simple: RANDOM
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+  - name: v2
+    labels:
+      version: v2
+  - name: v3
+    labels:
+      version: v3" > ./05-mTLS/08b-destinationrule-reviews.yaml
+
+echo "apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: productpage-virtualservice
+spec:
+  gateways:
+  - bookinfo-wildcard-gateway.bookretail-istio-system.svc.cluster.local
+  hosts:
+  - productpage.bookinfo.apps.cluster-154a.154a.sandbox500.opentlc.com
+  http:
+  - match:
+    - uri:
+        exact: /
+    - uri:
+        exact: /productpage
+    - uri:
+        prefix: /static
+    - uri:
+        exact: /login
+    - uri:
+        exact: /logout
+    - uri:
+        prefix: /api/v1/products
+    route:
+    - destination:
+        host: productpage.bookinfo.svc.cluster.local
+        port:
+          number: 9080
+---" > ./05-mTLS/09-virtualservices.yaml
+
+
+echo "apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: bookinfo-wildcard-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      privateKey: /etc/istio/ingressgateway-certs/tls.key
+      serverCertificate: /etc/istio/ingressgateway-certs/tls.crt
+    hosts:
+    - productpage.bookinfo.apps.cluster-154a.154a.sandbox500.opentlc.com" > ./05-mTLS/10-wildcard-gateway.yaml
+
+echo "apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/host.generated: \"true\"
+  labels:
+    app: productpage
+  name: productpage-gateway
+spec:
+  host: productpage.bookinfo.apps.cluster-154a.154a.sandbox500.opentlc.com
+  port:
+    targetPort: https
+  tls:
+    termination: passthrough
+  to:
+    kind: Service
+    name: istio-ingressgateway
+    weight: 100
+  wildcardPolicy: None" > ./05-mTLS/11-productpage-route.yaml
+
 echo -en '\n-------- 5.1 Login --------\n'
 oc login $LAB_MASTER_API -u $OCP_USER -p $OCP_PASS -n $BOOK_APP_NS
 
@@ -9,8 +127,6 @@ do
   oc set probe deploy -n $BOOK_APP_NS $i --liveness -- echo ok
   oc set probe deploy -n $BOOK_APP_NS $i --readiness -- echo ok
 done
-
-
 
 echo -en '\n-------- 5.3 Creating certifates and ingress gateway--------\n'
 echo "

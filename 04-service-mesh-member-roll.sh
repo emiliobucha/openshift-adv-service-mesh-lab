@@ -1,5 +1,15 @@
 echo -en '\n-------- 4. Creating SM MemberRoll --------\n'
 
+mkdir -p ./04-service-mesh-member-roll
+
+echo "apiVersion: maistra.io/v1
+kind: ServiceMeshMemberRoll
+metadata:
+  name: default
+spec:
+  members:
+  - bookinfo" > ./04-service-mesh-member-roll/06-service-mesh-member-roll.yaml
+
 echo -en '\n-------- 4.1 Login --------\n'
 oc login $LAB_MASTER_API -u $OCP_USER -p $OCP_PASS -n $SM_CP_NS
 

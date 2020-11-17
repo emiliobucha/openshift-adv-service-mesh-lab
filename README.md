@@ -56,7 +56,7 @@ This script installs all operators are needed for service mesh
     * Jaeger Operator
     * Openshift Service Mesh Operator
 
-    Note: to use the API v1 structure I had to create the subscription in channel 1.0 and create the control plane installation with apiVersion: maistra.io/v1 in 
+    Note: to use the API v1 structure I had to create the subscription in channel 1.0 and create the control plane installation with apiVersion: maistra.io/v1
 
 02. Execute 02-deploy-bookinfo-application.sh script
 

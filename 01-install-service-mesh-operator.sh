@@ -1,5 +1,64 @@
 echo '-------- 1. Service Mesh operator Installation --------'
 
+mkdir -p ./01-installation
+echo "apiVersion: v1
+kind: Namespace
+metadata:
+  name: openshift-operators-redhat 
+  annotations:
+    openshift.io/node-selector: ""
+  labels:
+    openshift.io/cluster-monitoring: "true"
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: openshift-operators-redhat 
+  namespace: openshift-operators-redhat
+spec: {}
+---" > ./01-installation/00-ns-operator-group.yaml
+
+
+echo "apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: elasticsearch-operator
+  namespace: openshift-operators-redhat
+spec:
+  channel: "4.5"
+  installPlanApproval: Automatic
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  name: elasticsearch-operator" > ./01-installation/01-es-operator.yaml
+
+
+echo "apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: jaeger-product
+  namespace: openshift-operators-redhat
+spec:
+  channel: "stable"
+  installPlanApproval: Automatic
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  name: jaeger-product" > ./01-installation/02-jaeger-operator.yaml
+
+
+echo "apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: servicemeshoperator
+  namespace: openshift-operators
+spec:
+  channel: "1.0"
+  installPlanApproval: Automatic
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  name: servicemeshoperator" > ./01-installation/04-servicemesh-operator.yaml
+
+
+
 echo '-------- 1.1 Login --------'
 oc login $LAB_MASTER_API -u $OCP_USER -p $OCP_PASS
 
