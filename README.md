@@ -5,6 +5,7 @@ Red Hat Service Mesh Homework Assignment Lab for Adv Red Hat Service Mesh Course
 * *Student*: Emilio Buchaillot
 * *Company*: Semperti [Red Hat Partner]
 * *Email*: <emilio.buchaillot@semperti.com>
+* *Repo*: [Github - Openshift Adv Service Mesh Assignment - Emilio Buchaillot](https://github.com/emiliobucha/openshift-adv-service-mesh-lab)
 
 ## Evidence
 
