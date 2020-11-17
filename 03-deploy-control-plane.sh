@@ -49,7 +49,7 @@ spec:
         user: admin
         passphrase: redhat
     tracing:
-      enabled: true' > ./03-control-plane/05-deploy-control-plane.sh
+      enabled: true' > ./03-control-plane/05-deploy-control-plane.yaml
 
 
 echo '-------- 3.1 Login --------'
