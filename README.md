@@ -12,7 +12,7 @@ Red Hat Service Mesh Homework Assignment Lab for Adv Red Hat Service Mesh Course
 
 ## 2. POC Environment
 
-*IMPORTANT!!! Expiration Lab 10/01/20 11:47 EDT* 
+*IMPORTANT!!! Expiration Lab 11/23/20 09:03 EST* 
 
 * API Server
 
