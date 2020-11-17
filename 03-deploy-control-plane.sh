@@ -1,7 +1,7 @@
 echo '-------- 3. Deploy Service Mesh Control Plane --------'
 
 mkdir -p ./03-control-plane
-echo "apiVersion: maistra.io/v1
+echo 'apiVersion: maistra.io/v1
 kind: ServiceMeshControlPlane
 metadata:
   name: service-mesh-installation
@@ -49,7 +49,7 @@ spec:
         user: admin
         passphrase: redhat
     tracing:
-      enabled: true" > ./03-control-plane/05-deploy-control-plane.sh
+      enabled: true' > ./03-control-plane/05-deploy-control-plane.sh
 
 
 echo '-------- 3.1 Login --------'

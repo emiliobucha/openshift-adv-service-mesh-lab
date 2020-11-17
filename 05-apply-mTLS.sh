@@ -1,7 +1,7 @@
 echo -en '\n-------- 5. Securing  --------\n'
 
 mkdir -p ./05-mTLS
-echo "apiVersion: authentication.istio.io/v1alpha1
+echo 'apiVersion: authentication.istio.io/v1alpha1
 kind: Policy
 metadata:
   name: {{DEPLOY_NAME}}-mtls
@@ -10,9 +10,9 @@ spec:
   - mtls:
       mode: STRICT
   targets:
-  - name: {{DEPLOY_NAME}}" > ./05-mTLS/07-policy-template.yaml
+  - name: {{DEPLOY_NAME}}' > ./05-mTLS/07-policy-template.yaml
 
-echo "apiVersion: networking.istio.io/v1alpha3
+echo 'apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
   name: {{DEPLOY_NAME}}-destinationrule-mtls
@@ -24,9 +24,9 @@ spec:
   subsets:
   - name: v1
     labels:
-      version: v1" > ./05-mTLS/08a-destinationrule-template.yaml
+      version: v1' > ./05-mTLS/08a-destinationrule-template.yaml
 
-echo "apiVersion: networking.istio.io/v1alpha3
+echo 'apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
   name: reviews-destinationrule-mtls
@@ -46,9 +46,9 @@ spec:
       version: v2
   - name: v3
     labels:
-      version: v3" > ./05-mTLS/08b-destinationrule-reviews.yaml
+      version: v3' > ./05-mTLS/08b-destinationrule-reviews.yaml
 
-echo "apiVersion: networking.istio.io/v1alpha3
+echo 'apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: productpage-virtualservice
@@ -76,10 +76,10 @@ spec:
         host: productpage.bookinfo.svc.cluster.local
         port:
           number: 9080
----" > ./05-mTLS/09-virtualservices.yaml
+---' > ./05-mTLS/09-virtualservices.yaml
 
 
-echo "apiVersion: networking.istio.io/v1alpha3
+echo 'apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: bookinfo-wildcard-gateway
@@ -96,9 +96,9 @@ spec:
       privateKey: /etc/istio/ingressgateway-certs/tls.key
       serverCertificate: /etc/istio/ingressgateway-certs/tls.crt
     hosts:
-    - productpage.bookinfo.apps.cluster-154a.154a.sandbox500.opentlc.com" > ./05-mTLS/10-wildcard-gateway.yaml
+    - productpage.bookinfo.apps.cluster-154a.154a.sandbox500.opentlc.com' > ./05-mTLS/10-wildcard-gateway.yaml
 
-echo "apiVersion: route.openshift.io/v1
+echo 'apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   annotations:
@@ -116,7 +116,7 @@ spec:
     kind: Service
     name: istio-ingressgateway
     weight: 100
-  wildcardPolicy: None" > ./05-mTLS/11-productpage-route.yaml
+  wildcardPolicy: None' > ./05-mTLS/11-productpage-route.yaml
 
 echo -en '\n-------- 5.1 Login --------\n'
 oc login $LAB_MASTER_API -u $OCP_USER -p $OCP_PASS -n $BOOK_APP_NS

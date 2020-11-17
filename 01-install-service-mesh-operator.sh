@@ -1,7 +1,7 @@
 echo '-------- 1. Service Mesh operator Installation --------'
 
 mkdir -p ./01-installation
-echo "apiVersion: v1
+echo 'apiVersion: v1
 kind: Namespace
 metadata:
   name: openshift-operators-redhat 
@@ -16,10 +16,10 @@ metadata:
   name: openshift-operators-redhat 
   namespace: openshift-operators-redhat
 spec: {}
----" > ./01-installation/00-ns-operator-group.yaml
+---' > ./01-installation/00-ns-operator-group.yaml
 
 
-echo "apiVersion: operators.coreos.com/v1alpha1
+echo 'apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: elasticsearch-operator
@@ -29,10 +29,10 @@ spec:
   installPlanApproval: Automatic
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  name: elasticsearch-operator" > ./01-installation/01-es-operator.yaml
+  name: elasticsearch-operator' > ./01-installation/01-es-operator.yaml
 
 
-echo "apiVersion: operators.coreos.com/v1alpha1
+echo 'apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: jaeger-product
@@ -42,10 +42,10 @@ spec:
   installPlanApproval: Automatic
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  name: jaeger-product" > ./01-installation/02-jaeger-operator.yaml
+  name: jaeger-product' > ./01-installation/02-jaeger-operator.yaml
 
 
-echo "apiVersion: operators.coreos.com/v1alpha1
+echo 'apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: servicemeshoperator
@@ -55,7 +55,7 @@ spec:
   installPlanApproval: Automatic
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  name: servicemeshoperator" > ./01-installation/04-servicemesh-operator.yaml
+  name: servicemeshoperator' > ./01-installation/04-servicemesh-operator.yaml
 
 
 
